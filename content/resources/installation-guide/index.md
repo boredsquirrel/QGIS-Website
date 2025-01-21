@@ -73,7 +73,7 @@ Before installing any of the nightly builds note the [warnings](#warning) below.
 
 # Linux
 
-Most linux distributions split QGIS into several packages; you’ll probably need `qgis` and `qgis-python` (to run plugins). Packages like `qgis-grass` (or `qgis-plugin-grass`), `qgis-server` can be skipped initially, or installed only when you need them.
+Most linux distributions split QGIS into several packages; you’ll probably need `qgis` and `qgis-python` (to run plugins). Packages like `qgis-grass` (or `qgis-plugin-grass`), `qgis-server` can be installed when you need them.
 
 Below you will find specific instructions per distribution. For most distro’s there are instructions to install QGIS stable and instructions to install a cutting edge QGIS testing build (note the [warning](#warning)).
 
@@ -297,29 +297,27 @@ Please remove all the QGIS and GRASS packages you may have installed from other 
 
 ## Fedora
 
-Get packages for any Fedora version by typing:
+Get packages for Fedora varians using `dnf` by typing:
 
 ```
 sudo dnf install qgis python3-qgis qgis-grass qgis-server
 ```
 
-Default Fedora software repositories often hold older versions of QGIS.
+If you are on **Fedora Atomic Desktops**, you have 2 options:
 
-To have newer versions or the latest LTR, you have to add alternative software repositories based on the version you want to install (stable, LTR or testing).
+1. Install QGis to the system
 
-### QGIS stable
-
-Enable the repository:
+This is the easiest method, saves data and disk space, but will slow down system updates a bit
 
 ```
-sudo dnf copr enable dani/qgis
+rpm-ostree install qgis python3-qgis qgis-grass qgis-server
 ```
 
-After that type the commands below to install QGIS:
+2. Install in a toolbox or distrobox
 
-```
-sudo dnf install qgis python3-qgis qgis-grass
-```
+See the chapter below 
+
+Fedora switches between the current QGis release and the LTs releases. The unstable "Rawhide" branch will contain newer but possibly buggy QGis Versions.
 
 In case you would like to install QGIS Server (note that it’s not a common practice to install both client and server applications on the same machine), type:
 
@@ -329,37 +327,12 @@ sudo dnf install qgis-server python3-qgis
 
 |Distribution|Version|QGIS version|GRASS GIS version|
 |---|---|---|---|
-|Fedora|36|3.28|8.0|
-||37|3.28|8.2|
+|Fedora|40|3.34.14|3.34.14|
+||41|3.40.2|3.40.2|
 
-More information are available at https://copr.fedorainfracloud.org/coprs/dani/qgis/
-
-### QGIS LTR (Long Term Release)
-
-Enable the repository:
-
-```
-sudo dnf copr enable dani/qgis-ltr
-```
-
-After that type the commands below to install QGIS:
-
-```
-sudo dnf install qgis python3-qgis qgis-grass
-```
-
-In case you would like to install QGIS Server (note that it’s not a common practice to install both client and server applications on the same machine), type:
-
-```
-sudo dnf install qgis-server python3-qgis
-```
-
-|Distribution|Version|QGIS version|GRASS GIS version|
-|---|---|---|---|
-|Fedora|36|3.22|8.0|
-||37|3.22|8.2|
-
-More information are available at https://copr.fedorainfracloud.org/coprs/dani/qgis-ltr/
+Always up-to-date version infos:
+- [QGis](https://packages.fedoraproject.org/pkgs/qgis/qgis)
+- [QGis-Grass](https://packages.fedoraproject.org/pkgs/qgis/qgis-grass)
 
 ## NixOS
 
@@ -504,17 +477,17 @@ For bugs and other behaviour, read comments here : https://aur.archlinux.org/pac
 
 There is an QGIS flatpak for QGIS Stable available, maintained by the flathub community.
 
-For general Linux Flatpak install notes, see https://flatpak.org/setup/
+For general Linux Flatpak install notes, see [the Flathub website](https://flatpak.org/setup).
 
-QGIS on Flathub: https://flathub.org/apps/details/org.qgis.qgis
+[Here you can find QGIS on Flathub](https://flathub.org/apps/details/org.qgis.qgis).
 
 To install:
 
 ```
-flatpak install --from https://dl.flathub.org/repo/appstream/org.qgis.qgis.flatpakref
+flatpak install flathub org.qgis.qgis
 ```
 
-Then to run:
+The app should appear in your app launcher, alternatively use this command:
 
 ```
 flatpak run org.qgis.qgis
@@ -530,7 +503,8 @@ On certain distributions, you may also need to install xdg-desktop-portal or xdg
 
 Flathub files: https://github.com/flathub/org.qgis.qgis and report issues here: https://github.com/flathub/org.qgis.qgis/issues
 
-Note: if you need to install additional Python modules, because they are needed by a plugin, you can install the module with (here installing the scipy module):
+### Extension Support
+If you need to install additional Python modules, because they are needed by a plugin, you can install the module with (here installing the `scipy` module):
 
 ```
 flatpak run --devel --command=pip3 org.qgis.qgis install scipy --user
